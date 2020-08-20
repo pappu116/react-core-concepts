@@ -1,22 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
+
+  const nayoks =['razzak', 'sazzak','riaz','bapparaz','mutia','chutia']
   
-  var persone = {
-      name:"Dr. MAhfuz",
-      job: "singer"
-  }
-  var persone2 = {
-    name:"eva rahman",
-    job: "kokil konthi"
-}
-var style={
-  color:'red',
-  backgroundColor:'yellow'
-}
-const nayok =['ami', 'mai', 'sai', 'lai']
+  
+const products =[
+  {name:'Photoshope', price:'60.99'},
+  {name:'ilistrator', price:'50.99'},
+  {name:'PDF Reader', price : '5.99'}
+]
   return (
     <div className="App">
       <header className="App-header">
@@ -24,54 +19,89 @@ const nayok =['ami', 'mai', 'sai', 'lai']
         <p>
           Edit done mama <code>src/App.js</code> and save to reload.
         </p>
-         <h1 className="" style={style}>My Heading:{persone.name + " " + persone.job}</h1>
-         <h2 style={{backgroundColor:'skyblue', color:'#333'}}>singer: {persone2.name + " " + persone2.job}</h2>
-        <p>similler Look Style</p>
-        {/* similear look style */}
-        <Person></Person>
-        <Person></Person>
-        <Person></Person>
-        <Person></Person>
-        {/* silimer data style */}
-        <p>Similer data Style dynamik </p>
-        <Persondata name="Karim" job="krisok"></Persondata>
-        <Persondata name="kasem" job="hal-chas kore"></Persondata>
-        <Persondata name="jamil" job="chagol chorai"></Persondata>
-        <Persondata name="josim" job="wang wang"></Persondata> 
-        {/* if u want use arry thats posible just use under system
-        {/* <Persondata name={nayok[0]}></Persondata>
-        <Persondata name={nayok[1]} job="hal-chas kore"></Persondata>
-        <Persondata name={nayok[2]}job="chagol chorai"></Persondata>
-        <Persondata name={nayok[3]} job="wang wang"></Persondata> */}
+        <Counter></Counter>
+        <Todos></Todos>
+        <ul>
+         {
+           nayoks.map(nayok => <li>{nayok}</li>)
+         }
+
+      {
+        products.map(product=> <li>{product.name}</li>)
+      }
+      </ul>
+         {/* functional product view */}
+      {
+        products.map(pd =><Product product={pd}></Product>)
+      }
+      {/* manualy product view style */}
+      <Product product={products[0]}></Product>
+      <Product product={products[1]}></Product>
+      <Product product={products[2]}></Product>
+
+      {/* user-area */}
+      
       </header>
     </div>
   );
 }
-// silimer look style
-function Person() {
-  var style={
-    border:'2px solid yellow',
-    margin:'10px'
+
+function Product(props) {
+  const ProductStyle={
+    border:'1px solid gray',
+    width:'200px',
+    height:'200px',
+    float:'left',
+    backgroundColor:'lightgray',
+    borderRadius:'5px',
   }
+  const {name, price} = props.product
   return(
-    <div style={style}>
-       <h1>Name:Pappu Hasan</h1>
-       <h2>status: Learn React</h2>
+    <div style={ProductStyle}>
+      <h3>{name}</h3>
+      <h4>{price}</h4>
+      <button>Buy Now</button>
     </div>
   )
 }
-// similer data style
 
-function Persondata(props) {
-  const style={
-    border:'2px solid yellow',
-    margin:'10px',
-    width:'400px'
-  }
-  return  <div style={style}>
-    <h1>Name:{props.name}</h1>
-    <h3>Profetion:{props.job}</h3>
-  </div>
+function Counter() {
+  const [count, setCount]=useState(10);
+  // const handleIncrease=() =>{
+  //   const newCount= count  +1;
+  //   setCount(newCount)
+  // }
+
+  //another style 
+  const handleIncrease=() =>setCount(count +1)
+  return(
+    <div>
+      <h1>Count: {count}</h1>
+      <button onClick={()=>setCount(count-1)}>Dicrease</button>
+      <button onClick={handleIncrease}>increase</button>
+    </div>
+  )
 }
+//user style-area
 
+function Todos() {
+  const [todos, setTodos] = useState([]);
+  useEffect(()=>{
+    fetch('https://jsonplaceholder.typicode.com/todos')
+    .then(res => res.json())
+    .then(data => setTodos(data));
+  
+  })
+  
+  return(
+    <div>
+      <h3>Daynamic Todos: {todos.length}</h3>
+      <ul>
+      {
+        todos.map(todo => <li>{todo.title}<br></br>{todo.completed}</li>)
+        }
+      </ul>
+    </div>
+  )
+}
 export default App;
