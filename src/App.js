@@ -16,6 +16,7 @@ var style={
   color:'red',
   backgroundColor:'yellow'
 }
+const nayok =['ami', 'mai', 'sai', 'lai']
   return (
     <div className="App">
       <header className="App-header">
@@ -31,11 +32,22 @@ var style={
         <Person></Person>
         <Person></Person>
         <Person></Person>
+        {/* silimer data style */}
+        <p>Similer data Style dynamik </p>
+        <Persondata name="Karim" job="krisok"></Persondata>
+        <Persondata name="kasem" job="hal-chas kore"></Persondata>
+        <Persondata name="jamil" job="chagol chorai"></Persondata>
+        <Persondata name="josim" job="wang wang"></Persondata> 
+        {/* if u want use arry thats posible just use under system
+        {/* <Persondata name={nayok[0]}></Persondata>
+        <Persondata name={nayok[1]} job="hal-chas kore"></Persondata>
+        <Persondata name={nayok[2]}job="chagol chorai"></Persondata>
+        <Persondata name={nayok[3]} job="wang wang"></Persondata> */}
       </header>
     </div>
   );
 }
-
+// silimer look style
 function Person() {
   var style={
     border:'2px solid yellow',
@@ -47,6 +59,19 @@ function Person() {
        <h2>status: Learn React</h2>
     </div>
   )
+}
+// similer data style
+
+function Persondata(props) {
+  const style={
+    border:'2px solid yellow',
+    margin:'10px',
+    width:'400px'
+  }
+  return  <div style={style}>
+    <h1>Name:{props.name}</h1>
+    <h3>Profetion:{props.job}</h3>
+  </div>
 }
 
 export default App;
